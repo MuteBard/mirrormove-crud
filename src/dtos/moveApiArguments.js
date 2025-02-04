@@ -3,10 +3,15 @@ const { sortOrderEnum } = require('./sortOrder');
 const { assertString, assertBoolean } = require('../util/assertions')
 
 function setMoveApiArguments(args) {
-    const updatedArgs = {}
+    const updatedArgs = {
+        name : '',
+        isHidden: false
+    }
+    args.isHidden = args.isHidden == 'true' ? true : false;
+
     console.log(args)
     assertString(args.name, 'name');
-    assertBoolean(args.isHidden, 'isHidden');
+    assertBoolean(args.isHidden , 'isHidden');
 
     if (!!args.name) {
         updatedArgs.name = args.name;

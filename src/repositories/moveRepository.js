@@ -16,7 +16,7 @@ async function search(args) {
         where['moves.description_'] = `LIKE '%${args.description}%'`;
     }
 
-    let order = `moves.created_at DESC`;
+    let order = `moves.updated_at DESC`;
 
     switch (args.orderBy) {
         case "NAME":

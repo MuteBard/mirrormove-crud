@@ -1,5 +1,5 @@
 function sortOrderEnum(term) {
-    if (!term) return;
+    if (!term) return 'DESC';
     const sortOrderMap = {
         ASC: 'ASC',
         DESC: 'DESC'

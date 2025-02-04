@@ -3,7 +3,11 @@ const { sortOrderEnum } = require('./sortOrder');
 const { assertString, assertBoolean } = require('../util/assertions')
 
 function setActionApiArguments(args) {
-    const updatedArgs = {};
+    const updatedArgs = {
+        name : '',
+        isHidden: false
+    }
+    args.isHidden = args.isHidden == 'true' ? true : false;
 
     assertString(args.name, 'name');
     assertBoolean(args.isHidden, 'isHidden');

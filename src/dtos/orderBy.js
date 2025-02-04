@@ -1,5 +1,5 @@
 function orderByEnum(term){
-    if (!term) return;
+    if (!term) return 'UPDATEDAT';
     const orderByMap = {
         NAME: 'NAME',
         SECONDS: 'SECONDS',

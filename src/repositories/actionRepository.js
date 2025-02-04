@@ -15,7 +15,7 @@ async function search(args) {
         where.description_ = { [Op.like]: `%${args.description}%` };
     }
 
-    let order = [['created_at', 'DESC']];
+    let order = [['updated_at', 'DESC']];
 
     switch (args.orderBy) {
         case 'NAME':
@@ -38,8 +38,7 @@ async function search(args) {
             where,
             order
         });
-        return actions;
-
+        return actionMapper(actions)
     } catch (error) {
         console.error('Error searching actions:', error);
         throw error;
@@ -50,7 +49,7 @@ async function search(args) {
 async function byId(id) {
     try {
         const action = await Action.findByPk(id);
-        return action;
+        return actionMapper(action)
     } catch (error) {
         console.error('Error finding action by primary key:', error);
         throw error;
@@ -63,7 +62,7 @@ async function byName(name){
         const action = await Action.findOne({
             where: { name }
         });
-        return action;
+        return actionMapper(action)
     } catch (error) {
         console.error('Error finding action by name:', error);
         throw error;
@@ -146,16 +145,20 @@ async function update(existing, changes) {
     })
 }
 
-function actionMapper(a) {
-    const action = {};
-    action.name = a.name 
-    action.isHidden = a.is_hidden 
-    action.description = a.description_ 
-    action.createdAt = a.created_at
-    action.updatedAt = a.updated_at
-    action.seconds = a.seconds
-    action.token = a.token
-    return action;
+function actionMapper(input) {
+    const actions = Array.isArray(input) ? input : [input];
+    return actions.map((a) => {
+        const action = {};
+        action.id = a.id;
+        action.name = a.name;
+        action.isHidden = a.is_hidden;
+        action.description = a.description_;
+        action.createdAt = a.created_at;
+        action.updatedAt = a.updated_at;
+        action.seconds = a.seconds;
+        action.token = a.token;
+        return action;
+    });
 }
 
 exports.search = search;
