@@ -58,13 +58,13 @@ async function create(payload){
     const { actionLoops, ...moveData} = payload
 
     try {
-        const newMove = JSON.stringify(await Move.create(moveData));
-        const { id: moveId } = newMove;
+        const newMove = JSON.parse(JSON.stringify(await Move.create(moveData)));
+        const moveId = newMove.id;
         await Promise.all(actionLoops.map(async (al) => {
             const moveActionData = {
-                action_id: al.actionId,
+                action_id: al.ActionId,
                 move_id: moveId,
-                loops: al.loops
+                loops: al.Loops
             }
             await MoveAction.create(moveActionData);
         }))
@@ -93,9 +93,9 @@ async function patch(payload){
 
         await Promise.all(actionLoops.map(async (al) => {
             const moveActionData = {
-                action_id: al.actionId,
+                action_id: al.ActionId,
                 move_id: moveId,
-                loops: al.loops
+                loops: al.Loops
             }
             await MoveAction.create(moveActionData);
         }))

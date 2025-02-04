@@ -37,19 +37,19 @@ function setPatchActionPayload(p) {
     payload.id = p.id;
     payload.updated_at = Date.now(); 
     
-    if (p.name !== null) {
+    if (exists(p.name)) {
         payload.name = p.name;
     }
-    if (p.isHidden !== null) {
+    if (exists(p.isHidden)) {
         payload.is_hidden = p.isHidden;
     }
-    if (p.description !== null) {
+    if (exists(p.description)) {
         payload.description_ = p.description;
     }
-    if (p.seconds!== null) {
+    if (exists(p.seconds)) {
         payload.seconds = p.seconds;
     }
-    if (p.token !== null) {
+    if (exists(p.token)) {
         payload.token = p.token;
     }
     return payload;

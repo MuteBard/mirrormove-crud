@@ -71,7 +71,6 @@ async function byName(name){
 
 async function create(payload){
     try {
-        console.log(payload)
         const action = await Action.create(payload);
         const mappedAction = actionMapper(action)
         return mappedAction;
@@ -138,7 +137,6 @@ async function update(existing, changes) {
     }
 
     existing.dataValues.updated_at = changes.updated_at; 
-    console.log(existing.dataValues)
 
     await Action.update(existing.dataValues, {
         where: {id: changes.id}

@@ -1,4 +1,4 @@
-const { assertString, assertNumber, assertBoolean, assertNotNull, assertList, assertNotEmptyStr } = require('../util/assertions')
+const { assertString, assertNumber, assertBoolean, assertNotNull, assertList, assertNotEmptyStr, exists} = require('../util/assertions')
 
 function setCreateMovePayload(p) {
 
@@ -24,43 +24,44 @@ function setCreateMovePayload(p) {
 }
 
 function setPatchMovePayload(p) {
-    const payload = {};
+    const payload = {
+        is_hidden: false
+    };
 
-    // assertNotNull(p.id, 'id')
-    // assertString(p.name, 'name');
-    // assertNotEmptyStr (p.name, 'name');
-    // assertString(p.String, 'description');
-    // assertBoolean(p.isHidden, 'isHidden');
-    // assertNumber(p.seconds, 'seconds');
-    // assertList(p.actionLoops, 'actionLoops');
+    assertNotNull(p.id, 'id')
+    assertString(p.name, 'name');
+    assertNotEmptyStr (p.name, 'name');
+    assertString(p.String, 'description');
+    assertBoolean(p.isHidden, 'isHidden');
+    assertNumber(p.seconds, 'seconds');
+    assertList(p.actionLoops, 'actionLoops');
 
     payload.id = p.id;
     payload.updated_at = Date.now(); 
 
-    if (p.name !== null) {
+    if (exists(p.name)) {
         payload.name = p.name;
     }
-    if (p.isHidden !== null) {
+    if (exists(p.isHidden)) {
         payload.is_hidden = p.isHidden;
     }
-    if (p.description !== null) {
+    if (exists(p.description)) {
         payload.description_ = p.description;
     }
-    if (p.seconds !== null) {
+    if (exists(p.seconds)) {
         payload.seconds = p.seconds;
     }
-    if (p.actionLoops !== null){
-        // validateActionLoops(p.actionLoops)
+    if (exists(p.actionLoops)){
+        validateActionLoops(p.actionLoops)
         payload.actionLoops = p.actionLoops
     }
     
     return payload;
 }
 
-
 function validateActionLoops(actionLoops) {
     for (const al of actionLoops) {
-        if (typeof al === 'object' && 'actionId' in al && 'loops' in al) {
+        if (typeof al === 'object' && 'ActionId' in al && 'Loops' in al) {
             continue;
         } else {
             throw new Error(`ActionLoop provided was not valid`); 

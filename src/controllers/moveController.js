@@ -6,7 +6,7 @@ const moveRepository = require('../repositories/moveRepository')
 async function search(req, res, next) {
     try {
         const args = setMoveApiArguments(req.query)
-        console.log(args)
+
         const data = await moveRepository.search(args);
         respond(res, data);
     } catch (err){
@@ -19,7 +19,6 @@ async function getById(req, res, next) {
         const id = Number(req.params.id);
         assertNumber(id, 'id')
         const data = await moveRepository.byId(id);
-        console.log(data)
         respond(res, data);
     } catch (err){
         next(err)

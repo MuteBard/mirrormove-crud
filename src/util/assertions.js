@@ -26,9 +26,14 @@ function assertList(arg, key) {
         Array.isArray(arg)) throw new Error(`${key} is not a List: ${arg}`)
 }
 
+function exists(arg){
+   return arg !== null && arg !== undefined
+}
+
 exports.assertNotNull = assertNotNull;
 exports.assertString = assertString;
 exports.assertNotEmptyStr = assertNotEmptyStr;
 exports.assertNumber = assertNumber;
 exports.assertBoolean = assertBoolean;
 exports.assertList = assertList;
+exports.exists = exists;
