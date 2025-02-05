@@ -21,6 +21,7 @@ app.delete(`/action/id/:id`, verifyToken, action.remove, handleError);
 app.get(`/move/search`, verifyToken, move.search, handleError);
 app.get(`/move/id/:id`, verifyToken, move.getById, handleError);
 app.get(`/move/name/:name`, verifyToken, move.getByName, handleError);
+app.get(`/move/batch`, verifyToken, move.batch, handleError);
 app.post(`/move`, verifyToken, move.create, handleError);
 app.patch(`/move`, verifyToken, move.patch, handleError);
 app.delete(`/move/id/:id`, verifyToken, move.remove, handleError);

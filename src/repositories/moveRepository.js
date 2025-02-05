@@ -54,6 +54,12 @@ async function byName(name) {
     return mappedMove;
 }
 
+async function batch(ids){
+    const moves = await moveSelectQuery({'moves.id': ids}, null)
+    const mappedMove = moveMapper(moves);
+    return mappedMove;
+}
+
 async function create(payload){
     const { actionLoops, ...moveData} = payload
 
@@ -154,7 +160,7 @@ async function moveSelectQuery(where, order) {
         ORDER BY
             ${!order ? `moves.created_at DESC` : order};
     `;
-    
+
     const [results] = await db.query(query, { raw: true });
     return results;
 }
@@ -165,6 +171,8 @@ function whereMapper(whereCondition){
         .map(([key, value]) => {
             if (typeof value == 'string' && value.includes('LIKE')) {
                 return `${key} ${value}`
+            } else if(Array.isArray(value)){
+                return `${key} IN (${value.toString()})`
             } else {
                 return `${key} = ${value}`
             }
@@ -235,6 +243,7 @@ function moveMapper(input) {
 exports.search = search;
 exports.byId = byId;
 exports.byName = byName;
+exports.batch = batch;
 exports.create = create;
 exports.patch = patch;
 exports.hide = hide;

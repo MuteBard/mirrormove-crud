@@ -35,6 +35,17 @@ async function getByName(req, res, next) {
     }
 }
 
+async function batch(req, res, next) {
+    try {
+        const { ids } = req.query;
+        const moveIds = ids.split(",")
+        const data = await moveRepository.batch(moveIds);
+        respond(res, data);
+    } catch (err){
+        next(err)
+    }
+}
+
 async function create(req, res, next) {
     try {
         const payload = setCreateMovePayload(req.body);
@@ -80,3 +91,4 @@ exports.getByName = getByName;
 exports.create = create;
 exports.patch = patch;
 exports.remove = remove;
+exports.batch = batch;
